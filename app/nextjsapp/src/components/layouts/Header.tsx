@@ -126,7 +126,7 @@ const Header = () => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, gap:1 }}>
-              <Typography>sample@gmail.com</Typography>
+              <Typography sx={{ display: { xs: 'none', md: 'block' } }}>sample@gmail.com</Typography>
               <Tooltip title="Open settings">
                 <IconButton
                   onClick={handleOpenUserMenu}
