@@ -1,5 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '../theme/theme';
 import Header from "../components/layouts/Header"
 import Main from "../components/layouts/Main"
 import Footer from "../components/layouts/Footer"
@@ -19,10 +21,10 @@ export default function HomePage() {
   }, [])
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
       <Main />
       <Footer />
-    </>
+    </ThemeProvider>
   )
 }
