@@ -99,7 +99,7 @@ const Main = () => {
       </Box>
       <Box component="section" sx={{ padding:"80px 40px" }}>
         <Typography variant="h2" gutterBottom>
-        新着
+        新着ワイン
         </Typography>
       </Box>
       <Box component="section" sx={{ padding:"80px 40px" }}>
