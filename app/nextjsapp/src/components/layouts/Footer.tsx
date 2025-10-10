@@ -43,7 +43,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 const Footer = () => {
   return (
     <AppBar
-      color="primary"
+      color="secondary"
       component="footer"
       // staticで最下部
       position="static"
@@ -55,7 +55,7 @@ const Footer = () => {
             <Link key={page.title} variant="body2" color="primary.contrastText" underline="none" sx={{ my: 2, display: 'block' }} href={page.url}>{page.title}</Link>
           ))}
         </Box>
-        <Typography variant="caption" component="p">
+        <Typography color="primary.contrastText" variant="caption" component="p">
           {copyright}
         </Typography>
       </StyledToolbar>

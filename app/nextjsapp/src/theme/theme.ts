@@ -5,7 +5,7 @@ import { indigo, teal } from '@mui/material/colors';
 const theme = createTheme({
   palette: {
     primary: {
-      main: indigo[500],
+      main: "#fffffc",
       contrastText: '#000000',
     },
     secondary: {

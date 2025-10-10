@@ -40,7 +40,7 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl"  sx={{ borderBottom: "1px solid #e9e9eb"}}>
         <Toolbar disableGutters>
           <CameraIcon />
           <Box aria-label="menu-block" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}></Box>
