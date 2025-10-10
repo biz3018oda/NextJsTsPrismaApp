@@ -1,6 +1,8 @@
 'use client'
 import { useEffect, useState } from 'react'
-import ResponsiveAppBar from "../components/ResponsiveAppBar"
+import Header from "../components/layouts/Header"
+import Main from "../components/layouts/Main"
+import Footer from "../components/layouts/Footer"
 
 type User = {
   id: number
@@ -18,15 +20,9 @@ export default function HomePage() {
 
   return (
     <>
-      <ResponsiveAppBar />
-      <main>
-        <h1>Users</h1>
-        <ul>
-          {users.map((user) => (
-            <li key={user.id}>{user.name}</li>
-          ))}
-        </ul>
-      </main>
+      <Header />
+      <Main />
+      <Footer />
     </>
   )
 }
