@@ -9,15 +9,23 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
+import CameraIcon from '@mui/icons-material/Camera';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+type Props = {
+  familyname: string,
+  firstname: string,
+  img: string,
+}
+
+const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Header = () => {
+const Header = ({ familyname, firstname, img }: Props) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -38,8 +46,11 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Container maxWidth="xl">
+      <Container maxWidth="xl"  sx={{ borderBottom: "1px solid #e9e9eb"}}>
         <Toolbar disableGutters>
+          <CameraIcon />
+          <Box aria-label="menu-block" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}></Box>
+        {/*
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -58,6 +69,7 @@ const Header = () => {
           >
             LOGO
           </Typography>
+        */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -71,6 +83,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Menu
+              aria-label="menu-sp"
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -88,7 +101,7 @@ const Header = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <Typography color="primary.contrastText" sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -100,8 +113,8 @@ const Header = () => {
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
-              mr: 2,
               display: { xs: 'flex', md: 'none' },
+              mr: 2,
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
@@ -112,23 +125,47 @@ const Header = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            aria-label="menu-pc"
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'primary.contrastText', display: 'block' }}
               >
                 {page}
               </Button>
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-              </IconButton>
-            </Tooltip>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, gap:2, alignItems:"center" }}>
+              <Typography sx={{ display: { xs: 'none', md: 'block' }, color:"#009688" }}>{familyname}{firstname}</Typography>
+              <Tooltip title="Open settings">
+                <IconButton
+                  onClick={handleOpenUserMenu}
+                  sx={{ p: 0 }}
+                  size="large"
+                  aria-label="account of current user"
+                  color="inherit"
+                >
+                  {/* <AccountCircleIcon /> */}
+                  <Avatar
+                    alt="account-img"
+                    src={img}
+                    sx={{
+                      width:"40px",
+                      height:"40px",
+                      border:"3px solid #009688",
+                      borderRadius:"50%",
+                      backgroundSize:"200px 200px",
+                      backgroundPosition: "right bottom"
+                    }}
+                  />
+                </IconButton>
+              </Tooltip>
+            </Box>
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
