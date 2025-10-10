@@ -16,10 +16,16 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
+type Props = {
+  familyname: string,
+  firstname: string,
+  img: string,
+}
+
 const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Header = () => {
+const Header = ({ familyname, firstname, img }: Props) => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -134,8 +140,8 @@ const Header = () => {
             ))}
           </Box>
           <Box sx={{ flexGrow: 0 }}>
-            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, gap:1 }}>
-              <Typography sx={{ display: { xs: 'none', md: 'block' } }}>sample@gmail.com</Typography>
+            <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, gap:2, alignItems:"center" }}>
+              <Typography sx={{ display: { xs: 'none', md: 'block' }, color:"#009688" }}>{familyname}{firstname}</Typography>
               <Tooltip title="Open settings">
                 <IconButton
                   onClick={handleOpenUserMenu}
@@ -144,8 +150,19 @@ const Header = () => {
                   aria-label="account of current user"
                   color="inherit"
                 >
-                  {/* <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" /> */}
-                  <AccountCircleIcon />
+                  {/* <AccountCircleIcon /> */}
+                  <Avatar
+                    alt="account-img"
+                    src={img}
+                    sx={{
+                      width:"40px",
+                      height:"40px",
+                      border:"3px solid #009688",
+                      borderRadius:"50%",
+                      backgroundSize:"200px 200px",
+                      backgroundPosition: "right bottom"
+                    }}
+                  />
                 </IconButton>
               </Tooltip>
             </Box>

@@ -8,21 +8,37 @@ import Footer from "../components/layouts/Footer"
 
 type User = {
   id: number
-  name: string
+  number: string
+  familyname: string
+  firstname: string
+  email: string
+  img: string
 }
 
 export default function HomePage() {
-  const [users, setUsers] = useState<User[]>([])
+  const url = "/api/users/";
+  const type = "number";
+  const number = "30305637"
+
+  // const [users, setUsers] = useState<User[]>([])
+  const [user, setUser] = useState<User>({
+    id: 0,
+    number: '',
+    familyname: '',
+    firstname: '',
+    email: '',
+    img: '',
+  })
 
   useEffect(() => {
-    fetch('/api/users')
+    fetch(url + '?' + type + '=' + number)
       .then((res) => res.json())
-      .then((data) => setUsers(data))
+      .then((data) => setUser(data))
   }, [])
 
   return (
     <ThemeProvider theme={theme}>
-      <Header />
+      <Header familyname={user.familyname} firstname={user.firstname} img={user.img} />
       <Main />
       <Footer />
     </ThemeProvider>
