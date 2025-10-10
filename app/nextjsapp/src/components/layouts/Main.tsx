@@ -97,34 +97,24 @@ const Main = () => {
           </Grid>
         </Box>
       </Box>
-      <Box component="section" sx={{ p: 2 }}>
+      <Box component="section" sx={{ padding:"80px 40px" }}>
         <Typography variant="h2" gutterBottom>
-        お知らせ
+        新着
         </Typography>
       </Box>
-      <Box component="section" sx={{ p: 2 }}>
+      <Box component="section" sx={{ padding:"80px 40px" }}>
         <Typography variant="h2" gutterBottom>
-        診療案内
+        NEWS
         </Typography>
       </Box>
-      <Box component="section" sx={{ p: 2 }}>
+      <Box component="section" sx={{ padding:"80px 40px" }}>
         <Typography variant="h2" gutterBottom>
-        院内紹介
+        サービスの特徴
         </Typography>
       </Box>
-      <Box component="section" sx={{ p: 2 }}>
+      <Box component="section" sx={{ padding:"80px 40px" }}>
         <Typography variant="h2" gutterBottom>
-        よくある質問
-        </Typography>
-      </Box>
-      <Box component="section" sx={{ p: 2 }}>
-        <Typography variant="h2" gutterBottom>
-        スタッフ紹介
-        </Typography>
-      </Box>
-      <Box component="section" sx={{ p: 2 }}>
-        <Typography variant="h2" gutterBottom>
-        アクセス
+        保有する人々
         </Typography>
       </Box>
     </Box>
