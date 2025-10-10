@@ -9,13 +9,14 @@ import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
 import Avatar from '@mui/material/Avatar';
+import CameraIcon from '@mui/icons-material/Camera';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = ['コレクション', 'XXXとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = () => {
@@ -41,6 +42,9 @@ const Header = () => {
     <AppBar position="static">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          <CameraIcon />
+          <Box aria-label="menu-block" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}></Box>
+        {/*
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
             variant="h6"
@@ -59,6 +63,7 @@ const Header = () => {
           >
             LOGO
           </Typography>
+        */}
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -72,6 +77,7 @@ const Header = () => {
               <MenuIcon />
             </IconButton>
             <Menu
+              aria-label="menu-sp"
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -89,7 +95,7 @@ const Header = () => {
             >
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <Typography color="primary.contrastText" sx={{ textAlign: 'center' }}>{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -101,8 +107,8 @@ const Header = () => {
             component="a"
             href="#app-bar-with-responsive-menu"
             sx={{
-              mr: 2,
               display: { xs: 'flex', md: 'none' },
+              mr: 2,
               flexGrow: 1,
               fontFamily: 'monospace',
               fontWeight: 700,
@@ -113,12 +119,15 @@ const Header = () => {
           >
             LOGO
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            aria-label="menu-pc"
+            sx={{ display: { xs: 'none', md: 'flex' }, mr: 2 }}
+          >
             {pages.map((page) => (
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: 'primary.contrastText', display: 'block' }}
               >
                 {page}
               </Button>

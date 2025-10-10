@@ -52,7 +52,7 @@ const Footer = () => {
       <StyledToolbar>
         <Box sx={{ display: { xs: 'none', md: 'flex'}, gap:2 }}>
           {pages.map((page) => (
-            <Link key={page.title} sx={{ my: 2, color: 'white', display: 'block' }} href={page.url}>{page.title}</Link>
+            <Link key={page.title} variant="body2" color="primary.contrastText" underline="none" sx={{ my: 2, display: 'block' }} href={page.url}>{page.title}</Link>
           ))}
         </Box>
         <Typography variant="caption" component="p">
