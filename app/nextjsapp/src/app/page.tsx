@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useState } from 'react'
+import ResponsiveAppBar from "../components/ResponsiveAppBar"
 
 type User = {
   id: number
@@ -17,6 +18,7 @@ export default function HomePage() {
 
   return (
     <>
+      <ResponsiveAppBar />
       <main>
         <h1>Users</h1>
         <ul>
