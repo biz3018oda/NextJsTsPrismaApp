@@ -13,6 +13,14 @@ const theme = createTheme({
     },
   },
   typography: {
+    h4: {
+      color: "#ffffff",
+      fontSize:'80px',
+    },
+    h6: {
+      color: "#ffffff",
+      fontSize:'16px',
+    },
     button: {
       fontWeight: '700',
     },
