@@ -5,17 +5,54 @@ import Stack from '@mui/material/Stack';
 import { styled } from '@mui/material/styles';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Grid from '@mui/material/Grid';
+import Lineup from '../layouts/Lineup';
 
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: '#fff',
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles('dark', {
-    backgroundColor: '#1A2027',
-  }),
-}));
+const serviceName = "VinChain"
+const wineName = "THE TYPE A"
+
+const info = [
+  {
+    id: 1,
+    name:"Eleve",
+    explain:"時間が育てた、唯一無二の一杯を",
+    price:"9億1234万〜",
+    img:"/blue-wine.jpeg",
+    url: "http",
+  },
+  {
+    id: 2,
+    name:"Eleve",
+    explain:"時間が育てた、唯一無二の一杯を",
+    price:"9億1234万〜",
+    img:"/blue-wine.jpeg",
+    url: "http",
+  },
+  {
+    id: 3,
+    name:"Eleve",
+    explain:"時間が育てた、唯一無二の一杯を",
+    price:"9億1234万〜",
+    img:"/blue-wine.jpeg",
+    url: "http",
+  },
+  {
+    id: 4,
+    name:"Eleve",
+    explain:"時間が育てた、唯一無二の一杯を",
+    price:"9億1234万〜",
+    img:"/blue-wine.jpeg",
+    url: "http",
+  },
+  {
+    id: 5,
+    name:"Eleve",
+    explain:"時間が育てた、唯一無二の一杯を",
+    price:"9億1234万〜",
+    img:"/blue-wine.jpeg",
+    url: "http",
+  },
+]
 
 const Main = () => {
   return (
@@ -38,18 +75,27 @@ const Main = () => {
       }}>
         <Stack spacing={2} sx={{ alignItems:"center" }} >
           <Typography variant="h6">
-          VinChain
+          {serviceName}
           </Typography>
           <Typography variant="h4">
-          THE TYPE A
+          {wineName}
           </Typography>
           <Button variant="contained" color="secondary" sx={{ width:"200px", padding:"12px 24px", borderRadius: "25px"}}>詳細を見る</Button>
         </Stack>
       </Box>
-      <Box component="section" sx={{ p: 2 }}>
-        <Typography variant="h2" gutterBottom>
-        ネット予約
+      <Box component="section" sx={{ padding:"80px 40px" }}>
+        <Typography variant="h3" gutterBottom>
+        コレクション
         </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 5, sm: 8, md: 12 }}>
+            {info.map(({ id, name, explain, price, img, url }) => (
+              <Grid key={id} size={{ xs: 2, sm: 4, md: 3 }}>
+                <Lineup name={name} explain={explain} price={price} img={img} url="http" />
+              </Grid>
+            ))}
+          </Grid>
+        </Box>
       </Box>
       <Box component="section" sx={{ p: 2 }}>
         <Typography variant="h2" gutterBottom>

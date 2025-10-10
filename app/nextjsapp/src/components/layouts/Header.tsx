@@ -16,7 +16,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-const pages = ['コレクション', 'XXXとは', '始め方', 'FAQ'];
+const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = () => {
