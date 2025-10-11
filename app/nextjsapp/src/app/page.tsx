@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { ThemeProvider } from "@mui/material/styles";
 import theme from "../theme/theme";
-import Header from "../components/layouts/Header";
+import Header from "../components/layouts/header/Header";
 import Main from "../components/layouts/main/Main";
-import Footer from "../components/layouts/Footer";
+import Footer from "../components/layouts/footer/Footer";
 
 type User = {
   id: number;

@@ -6,8 +6,9 @@ import { styled } from "@mui/material/styles";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
-import Lineup from "./Lineup";
+import Lineup from "../../ui/Lineup";
 import TextMobileStepper from "../../ui/TextMobileStepper";
+import AboutSection from "./AboutSection";
 
 const serviceName = "VinChain";
 const wineName = "THE TYPE A";
@@ -58,11 +59,6 @@ const info = [
 const Main = () => {
   return (
     <Box component="main">
-      {/* <ul>
-        {users.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul> */}
       <Box
         sx={{
           backgroundImage: "url('/vine.jpeg')",
@@ -125,10 +121,13 @@ const Main = () => {
           NEWS
         </Typography>
       </Box>
-      <Box component="section" sx={{ padding: "80px 40px" }}>
+      <Box component="section" sx={{ padding: "80px 0px" }}>
+        {/*         
         <Typography variant="h2" gutterBottom>
           サービスの特徴
         </Typography>
+         */}
+        <AboutSection />
       </Box>
       <Box component="section" sx={{ padding: "80px 40px" }}>
         <Typography variant="h2" gutterBottom>
