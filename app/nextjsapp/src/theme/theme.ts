@@ -10,6 +10,8 @@ const theme = createTheme({
     },
     secondary: {
       main: teal[500],
+      light: teal[50],
+      dark: teal[900],
     },
   },
   typography: {
@@ -29,6 +31,18 @@ const theme = createTheme({
     },
     body2: {
       fontWeight: '700',
+    },
+  },
+  components: {
+    MuiMobileStepper: {
+      styleOverrides: {
+        dotActive: {
+          backgroundColor: teal[500],
+        },
+        dots: {
+          display: "none"
+        }
+      },
     },
   }
 });
