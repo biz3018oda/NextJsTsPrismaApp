@@ -10,6 +10,7 @@ import Lineup from "../../ui/Lineup";
 import TextMobileStepper from "../../ui/TextMobileStepper";
 import NewItems from "./NewItems";
 import PeopleLivingWithWine from "./PeopleLivingWithWine";
+import NewsLists from "./NewsLists";
 
 
 const serviceName = "VinChain";
@@ -122,6 +123,7 @@ const Main = () => {
         <Typography variant="h2" gutterBottom>
           NEWS
         </Typography>
+        <NewsLists />
       </Box>
       <Box component="section" sx={{ padding: "80px 0px" }}>
         {/*
