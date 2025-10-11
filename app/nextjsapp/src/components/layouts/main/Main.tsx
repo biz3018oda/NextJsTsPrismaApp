@@ -8,7 +8,9 @@ import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Lineup from "../../ui/Lineup";
 import TextMobileStepper from "../../ui/TextMobileStepper";
-import AboutSection from "./AboutSection";
+import NewItems from "./NewItems";
+import PeopleLivingWithWine from "./PeopleLivingWithWine";
+
 
 const serviceName = "VinChain";
 const wineName = "THE TYPE A";
@@ -111,7 +113,7 @@ const Main = () => {
       <Box sx={{ backgroundColor:"secondary.main" }}>
         <Box component="section" sx={{ padding: "80px 40px" }}>
           <Typography variant="h2" sx={{ color:"#ffffff" }} gutterBottom>
-            新着ワイン
+            新着
           </Typography>
           <TextMobileStepper />
         </Box>
@@ -122,17 +124,18 @@ const Main = () => {
         </Typography>
       </Box>
       <Box component="section" sx={{ padding: "80px 0px" }}>
-        {/*         
+        {/*
         <Typography variant="h2" gutterBottom>
           サービスの特徴
         </Typography>
          */}
-        <AboutSection />
+        <NewItems />
       </Box>
       <Box component="section" sx={{ padding: "80px 40px" }}>
         <Typography variant="h2" gutterBottom>
           保有する人々
         </Typography>
+        <PeopleLivingWithWine />
       </Box>
     </Box>
   );

@@ -3,7 +3,7 @@ import { Box, Container, Typography, useTheme, useMediaQuery } from '@mui/materi
 
 const bgImg = "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e"
 
-export default function AboutSection() {
+export default function NewItems() {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
