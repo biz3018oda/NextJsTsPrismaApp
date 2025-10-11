@@ -1,109 +1,91 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import MobileStepper from '@mui/material/MobileStepper';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
+import { Box, Card, CardContent, CardMedia, Typography, MobileStepper, Button } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+
 
 const steps = [
   {
     id: 1,
-    label:'VIN CHAIN YAMANASHI',
-    name:'type B',
-    description: `2026年夏販売開始予定`,
+    name: 'A.Bさん',
+    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 2,
-    label:'VIN CHAIN KANAGAWA',
-    name:'type C',
-    description:'2027年夏販売開始予定',
+    name: 'C・Dさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 3,
-    label:'VIN CHAIN AKITA',
-    name:'type D',
-    description: `2028年夏販売開始予定`,
+    name: 'E・Fさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 4,
-    label:'VIN CHAIN YAMANASHI',
-    name:'type B',
-    description: `2026年夏販売開始予定`,
+    name: 'G・Hさん',
+    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 5,
-    label:'VIN CHAIN KANAGAWA',
-    name:'type C',
-    description:'2027年夏販売開始予定',
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 6,
-    label:'VIN CHAIN AKITA',
-    name:'type D',
-    description: `2028年夏販売開始予定`,
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 7,
-    label:'VIN CHAIN YAMANASHI',
-    name:'type B',
-    description: `2026年夏販売開始予定`,
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 8,
-    label:'VIN CHAIN KANAGAWA',
-    name:'type C',
-    description:'2027年夏販売開始予定',
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 9,
-    label:'VIN CHAIN AKITA',
-    name:'type D',
-    description: `2028年夏販売開始予定`,
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 10,
-    label:'VIN CHAIN YAMANASHI',
-    name:'type B',
-    description: `2026年夏販売開始予定`,
-  },
-  {
-    id: 11,
-    label:'VIN CHAIN KANAGAWA',
-    name:'type C',
-    description:'2027年夏販売開始予定',
-  },
-  {
-    id: 12,
-    label:'VIN CHAIN AKITA',
-    name:'type D',
-    description: `2028年夏販売開始予定`,
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
 ];
 
 export default function TextMobileStepper() {
   const theme = useTheme();
-  const [activeStep, setActiveStep] = React.useState(0);
-  const maxSteps = steps.length;
+  const [activeStep, setActiveStep] = useState(0);
+  const maxSteps = Math.ceil(steps.length / 3); // 3列ごとにページが進む
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, maxSteps - 1));
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
   };
 
+  // 1ページに表示する3つのアイテム
+  const displayPeople = steps.slice(activeStep * 3, (activeStep + 1) * 3);
+
   return (
-    <Box
-      sx={{
-        display:"flex",
-        flexDirection:"column",
-        alignItems:"center",
-      }}
-    >
+    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <MobileStepper
         aria-label="stepper-btn"
         variant="dots"
@@ -113,8 +95,10 @@ export default function TextMobileStepper() {
         sx={{
           maxWidth: 400,
           flexGrow: 1,
-          gap:2,
-          backgroundColor:"unset"
+          gap: 2,
+          backgroundColor: 'unset',
+          justifyContent: 'center',
+          mt: 5,
         }}
         nextButton={
           <Button
@@ -122,22 +106,22 @@ export default function TextMobileStepper() {
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
             sx={{
-              backgroundColor:"primary.main",
-              color: "secondary.dark",
-              borderRadius:"50%",
-              padding:"0",
-              width:"30px",
-              height:"30px",
-              display:"flex",
-              alignItems:"center",
-              justifyContent:"center",
-              minWidth:"unset",
+              color: 'secondary.dark',
+              backgroundColor: 'secondary.light',
+              borderRadius: '50%',
+              padding: '0',
+              width: '30px',
+              height: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: 'unset',
             }}
           >
             {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft sx={{ width:"1em", height:"1em", objectFit:"contain" }} />
+              <KeyboardArrowLeft sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
             ) : (
-              <KeyboardArrowRight sx={{ width:"1em", height:"1em", objectFit:"contain" }} />
+              <KeyboardArrowRight sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
             )}
           </Button>
         }
@@ -147,119 +131,58 @@ export default function TextMobileStepper() {
             onClick={handleBack}
             disabled={activeStep === 0}
             sx={{
-              backgroundColor:"secondary.dark",
-              borderRadius:"50%",
-              padding:"0",
-              width:"30px",
-              height:"30px",
-              display:"flex",
-              alignItems:"center",
-              justifyContent:"center",
-              minWidth:"unset",
+              color: 'secondary.light',
+              backgroundColor: 'secondary.dark',
+              borderRadius: '50%',
+              padding: '0',
+              width: '30px',
+              height: '30px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              minWidth: 'unset',
             }}
           >
             {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight sx={{ width:"1em", height:"1em", objectFit:"contain" }} />
+              <KeyboardArrowRight sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
             ) : (
-              <KeyboardArrowLeft sx={{ width:"1em", height:"1em", objectFit:"contain" }} />
+              <KeyboardArrowLeft sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
             )}
           </Button>
         }
       />
 
-      <Box sx={{ display: "flex", gap: 2, mt: 2 }}>
-        {/* 左のBOX */}
-        <Box sx={{ border: "2px solid", width: 200 }}>
-          {steps[activeStep - 1] ? (
-            <>
-              <Paper
-                square
-                elevation={0}
-                sx={{
-                  backgroundColor: "secondary.main",
-                  textAlign: "center",
-                }}
-              >
-                <Typography>{steps[activeStep - 1].label}</Typography>
-              </Paper>
-              <Box
-                sx={{
-                  height: 255,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  textAlign: "center",
-                }}
-              >
-                <Typography>{steps[activeStep - 1].name}</Typography>
-                <Typography>{steps[activeStep - 1].description}</Typography>
-              </Box>
-            </>
-          ) : (
-            <Box sx={{ height: 305 }} /> // 空白スペース確保
-          )}
-        </Box>
-        {/* 中央のBOX（active） */}
-        <Box
-          sx={{
-            border: "2px solid",
-            width: 200,
-          }}
-        >
-          <Paper
-            square
-            elevation={0}
-            sx={{
-              backgroundColor: "secondary.main",
-              textAlign: "center",
-            }}
-          >
-            <Typography>{steps[activeStep].label}</Typography>
-          </Paper>
+      <Box sx={{ display: 'flex', overflow: 'hidden', justifyContent: 'center', gap: 2 }}>
+        {displayPeople.map((person, index) => (
           <Box
+            key={person.id}
             sx={{
-              height: 255,
-              p: 2,
-              display: "flex",
-              flexDirection: "column",
-              textAlign: "center",
+              px: 2,
+              pb: 2,
+              width: 'calc(33.33% - 16px)', // 常に3列表示にする
+              display: 'flex',
+              justifyContent: 'center',
             }}
           >
-            <Typography>{steps[activeStep].name}</Typography>
-            <Typography>{steps[activeStep].description}</Typography>
+            <Card sx={{ borderRadius: 2, boxShadow: 3, width: '100%' }}>
+              <CardMedia
+                component="img"
+                height="220"
+                image={person.image}
+                alt={person.name}
+                sx={{ width: '100%', height: 'auto', objectFit: 'cover' }}
+              />
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Typography variant="h6" color="text.secondary">
+                  {person.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {person.description}
+                </Typography>
+              </CardContent>
+            </Card>
           </Box>
-        </Box>
-        {/* 右のBOX */}
-        <Box sx={{ border: "2px solid", width: 200 }}>
-          {steps[activeStep + 1] ? (
-            <>
-              <Paper
-                square
-                elevation={0}
-                sx={{
-                  backgroundColor: "secondary.main",
-                  textAlign: "center",
-                }}
-              >
-                <Typography>{steps[activeStep + 1].label}</Typography>
-              </Paper>
-              <Box
-                sx={{
-                  height: 255,
-                  p: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  textAlign: "center",
-                }}
-              >
-                <Typography>{steps[activeStep + 1].name}</Typography>
-                <Typography>{steps[activeStep + 1].description}</Typography>
-              </Box>
-            </>
-          ) : (
-            <Box sx={{ height: 305 }} /> // 空白スペース確保
-          )}
-        </Box>
+        ))}
       </Box>
     </Box>
   );
