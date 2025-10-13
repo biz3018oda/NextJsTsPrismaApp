@@ -9,6 +9,7 @@ import PeopleLivingWithWine from "./PeopleLivingWithWine";
  * Section - 保有する人々
  */
 const PeopleSection = () => {
+  const title = "保有する人々";
 
   return (
     <Box
@@ -17,7 +18,7 @@ const PeopleSection = () => {
       sx={{ padding: "80px 40px" }}
     >
       <Typography variant="h2" gutterBottom>
-        保有する人々
+        {title}
       </Typography>
       <PeopleLivingWithWine />
     </Box>

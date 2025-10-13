@@ -8,6 +8,7 @@ import NewsLists from "./NewsLists";
  * Section - ニュース
  */
 const NewsSection = () => {
+  const title = "NEWS";
 
   return (
     <Box
@@ -16,7 +17,7 @@ const NewsSection = () => {
       sx={{ padding: "80px 40px" }}
     >
       <Typography variant="h2" gutterBottom>
-        NEWS
+        {title}
       </Typography>
       <NewsLists />
     </Box>

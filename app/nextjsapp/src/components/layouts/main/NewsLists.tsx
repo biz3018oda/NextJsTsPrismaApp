@@ -3,103 +3,75 @@ import { useTheme } from '@mui/material/styles';
 import { Box, Card, CardContent, CardMedia, Typography, MobileStepper, Button } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
 
 
 const steps = [
   {
-    id:1,
-    img: 'https://images.unsplash.com/photo-1551963831-b3b1ca40c98e',
-    title: 'Breakfast',
-    author: '@bkristastucchio',
-    rows: 2,
-    cols: 2,
-    featured: true,
+    id: 1,
+    name: 'A.Bさん',
+    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:2,
-    img: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d',
-    title: 'Burger',
-    author: '@rollelflex_graphy726',
+    id: 2,
+    name: 'C・Dさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:3,
-    img: 'https://images.unsplash.com/photo-1522770179533-24471fcdba45',
-    title: 'Camera',
-    author: '@helloimnik',
+    id: 3,
+    name: 'E・Fさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:4,
-    img: 'https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c',
-    title: 'Coffee',
-    author: '@nolanissac',
-    cols: 2,
+    id: 4,
+    name: 'G・Hさん',
+    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:5,
-    img: 'https://images.unsplash.com/photo-1533827432537-70133748f5c8',
-    title: 'Hats',
-    author: '@hjrc33',
-    cols: 2,
+    id: 5,
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:6,
-    img: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62',
-    title: 'Honey',
-    author: '@arwinneil',
-    rows: 2,
-    cols: 2,
-    featured: true,
+    id: 6,
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:7,
-    img: 'https://images.unsplash.com/photo-1516802273409-68526ee1bdd6',
-    title: 'Basketball',
-    author: '@tjdragotta',
+    id: 7,
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:8,
-    img: 'https://images.unsplash.com/photo-1518756131217-31eb79b20e8f',
-    title: 'Fern',
-    author: '@katie_wasserman',
+    id: 8,
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:9,
-    img: 'https://images.unsplash.com/photo-1597645587822-e99fa5d45d25',
-    title: 'Mushrooms',
-    author: '@silverdalex',
-    rows: 2,
-    cols: 2,
+    id: 9,
+    name: 'I・Jさん',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
-    id:10,
-    img: 'https://images.unsplash.com/photo-1567306301408-9b74779a11af',
-    title: 'Tomato basil',
-    author: '@shelleypauls',
-  },
-  {
-    id:11,
-    img: 'https://images.unsplash.com/photo-1471357674240-e1a485acb3e1',
-    title: 'Sea star',
-    author: '@peterlaster',
-  },
-  {
-    id:12,
-    img: 'https://images.unsplash.com/photo-1589118949245-7d38baf380d6',
-    title: 'Bike',
-    author: '@southside_customs',
-    cols: 2,
+    id: 10,
+    name: 'K・Lさん',
+    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
 ];
 
 export default function NewsLists() {
-  const rowNum = 3; // 表示する列の数
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Math.ceil(steps.length / rowNum); // 3列ごとにページが進む
+  const maxSteps = Math.ceil(steps.length / 3); // 3列ごとにページが進む
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, maxSteps - 1));
@@ -110,7 +82,7 @@ export default function NewsLists() {
   };
 
   // 1ページに表示する3つのアイテム
-  const displayPeople = steps.slice(activeStep * rowNum, (activeStep + 1) * rowNum);
+  const displayPeople = steps.slice(activeStep * 3, (activeStep + 1) * 3);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
@@ -180,66 +152,37 @@ export default function NewsLists() {
         }
       />
 
-      <Box
-        sx={{
-          display: 'flex',
-          overflow: 'hidden',
-          width: '100%',
-          gap: 2,
-          px: 2,
-        }}
-        aria-label="image-ul"
-      >
-      {displayPeople.map((person) => (
-        <Box
-          key={person.id}
-          sx={{
-            width: '33.33%',
-            padding: 1,
-            boxSizing: 'border-box',
-          }}
-          aria-label="image-list-over"
-        >
-          <ImageListItem
+      <Box sx={{ display: 'flex', overflow: 'hidden', justifyContent: 'center', gap: 2 }}>
+        {displayPeople.map((person, index) => (
+          <Box
+            key={person.id}
             sx={{
-              borderRadius: 2,
-              boxShadow: 3,
-              overflow: 'hidden',
+              px: 2,
+              pb: 2,
+              width: 'calc(33.33% - 16px)', // 常に3列表示にする
+              display: 'flex',
+              justifyContent: 'center',
             }}
-            aria-label="image-list"
           >
-            {/* 画像部分を高さ固定の Box で囲む */}
-            <Box sx={{ width: '100%', height: 250 }}>
-              <img
-                srcSet={`${person.img}?w=600&fit=crop&auto=format&dpr=2 2x`}
-                src={`${person.img}?w=600&fit=crop&auto=format`}
-                alt={person.title}
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
+            <Card sx={{ borderRadius: 2, boxShadow: 3, width: '100%' }}>
+              <CardMedia
+                component="img"
+                height="220"
+                image={person.image}
+                alt={person.name}
+                sx={{ width: '100%', height: 'auto', objectFit: 'cover' }}
               />
-            </Box>
-            {/* タイトルと著者を表示 */}
-            <ImageListItemBar
-              title={person.title}
-              subtitle={person.author}
-              actionIcon={
-                <IconButton sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              sx={{
-                background: 'rgba(0,0,0,0.6)',
-                height: 56,
-              }}
-            />
-          </ImageListItem>
-        </Box>
-      ))}
+              <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                <Typography variant="h6" color="text.secondary">
+                  {person.name}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  {person.description}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

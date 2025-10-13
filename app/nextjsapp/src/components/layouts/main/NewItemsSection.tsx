@@ -1,24 +1,29 @@
 "use client";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import TextMobileStepper from "./TextMobileStepper";
+import NewItemsLists from "./NewItemsLists";
 
 
 /**
  * Section - 新着
  */
 const NewItemsSection = () => {
+  const title = "新着";
 
   return (
       <Box
         aria-label="content-new"
         sx={{ backgroundColor:"secondary.main" }}
       >
-        <Box component="section" sx={{ padding: "80px 40px" }}>
+        <Box
+          aria-label="content-new"
+          component="section"
+          sx={{ padding: "80px 40px" }}
+        >
           <Typography variant="h2" sx={{ color:"#ffffff" }} gutterBottom>
-            新着
+            {title}
           </Typography>
-          <TextMobileStepper />
+          <NewItemsLists />
         </Box>
       </Box>
   );
