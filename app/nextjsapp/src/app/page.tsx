@@ -1,5 +1,8 @@
 "use client";
+// クライアントコンポーネント
 import { useEffect, useState } from "react";
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../theme/theme";
 import { User } from "../types/User";
 import ApplicationContainer from '@/components/layouts/ApplicationContainer';
 import PublicRelationsSection from "@/components/layouts/main/PublicRelationsSection";
@@ -37,14 +40,17 @@ export default function HomePage() {
   }, []);
 
   return (
-    <ApplicationContainer user={user}>
+    <ApplicationContainer>
+    {/* <ApplicationContainer user={user}> */}
       {/* mainコンテンツ */}
-      <PublicRelationsSection />
-      <CollectionSection />
-      <NewItemsSection />
-      <NewsSection />
-      <ServiceSection />
-      <PeopleSection />
+      <ThemeProvider theme={theme}>
+        <PublicRelationsSection />
+        <CollectionSection />
+        <NewItemsSection />
+        <NewsSection />
+        <ServiceSection />
+        <PeopleSection />
+      </ThemeProvider>
     </ApplicationContainer>
   );
 }

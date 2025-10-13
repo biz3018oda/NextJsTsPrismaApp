@@ -1,5 +1,7 @@
 'use client'
 import * as React from 'react';
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../../theme/theme";
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -24,7 +26,15 @@ type Props = {
 const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-const Header = ({ familyname, firstname, img }: Props) => {
+// const Header = ({ familyname, firstname, img }: Props) => {
+const Header = () => {
+  const cookieUsers = {
+    familyname: "",
+    firstname: "",
+    img: "",
+  };
+  // const cookieStore = await cookies()
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
@@ -44,6 +54,7 @@ const Header = ({ familyname, firstname, img }: Props) => {
   };
 
   return (
+    <ThemeProvider theme={theme}>
     <AppBar position="static">
       <Container maxWidth="xl"  sx={{ borderBottom: "1px solid #e9e9eb"}}>
         <Toolbar disableGutters>
@@ -140,7 +151,7 @@ const Header = ({ familyname, firstname, img }: Props) => {
           </Box>
           <Box sx={{ flexGrow: 0 }}>
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'flex' }, gap:2, alignItems:"center" }}>
-              <Typography sx={{ display: { xs: 'none', md: 'block' }, color:"#009688" }}>{familyname}{firstname}</Typography>
+              <Typography sx={{ display: { xs: 'none', md: 'block' }, color:"#009688" }}>{cookieUsers.familyname}{cookieUsers.firstname}</Typography>
               <Tooltip title="Open settings">
                 <IconButton
                   onClick={handleOpenUserMenu}
@@ -151,7 +162,7 @@ const Header = ({ familyname, firstname, img }: Props) => {
                 >
                   <Avatar
                     alt="account-img"
-                    src={img}
+                    src={cookieUsers.img}
                     sx={{
                       width:"40px",
                       height:"40px",
@@ -190,6 +201,7 @@ const Header = ({ familyname, firstname, img }: Props) => {
         </Toolbar>
       </Container>
     </AppBar>
+    </ThemeProvider>
   );
 }
 export default Header;

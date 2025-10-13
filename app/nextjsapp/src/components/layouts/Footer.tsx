@@ -1,5 +1,7 @@
 'use client'
 import * as React from 'react';
+import { ThemeProvider } from "@mui/material/styles";
+import theme from "../../theme/theme";
 import { styled } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -42,24 +44,26 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 const Footer = () => {
   return (
-    <AppBar
-      color="secondary"
-      component="footer"
-      // staticで最下部
-      position="static"
-      sx={{ marginTop: 'auto' }}
-    >
-      <StyledToolbar>
-        <Box sx={{ display: { xs: 'none', md: 'flex'}, gap:2 }}>
-          {pages.map((page) => (
-            <Link key={page.title} variant="body2" color="primary.contrastText" underline="none" sx={{ my: 2, display: 'block' }} href={page.url}>{page.title}</Link>
-          ))}
-        </Box>
-        <Typography color="primary.contrastText" variant="caption" component="p">
-          {copyright}
-        </Typography>
-      </StyledToolbar>
-    </AppBar>
+    <ThemeProvider theme={theme}>
+      <AppBar
+        color="secondary"
+        component="footer"
+        // staticで最下部
+        position="static"
+        sx={{ marginTop: 'auto' }}
+      >
+        <StyledToolbar>
+          <Box sx={{ display: { xs: 'none', md: 'flex'}, gap:2 }}>
+            {pages.map((page) => (
+              <Link key={page.title} variant="body2" color="primary.contrastText" underline="none" sx={{ my: 2, display: 'block' }} href={page.url}>{page.title}</Link>
+            ))}
+          </Box>
+          <Typography color="primary.contrastText" variant="caption" component="p">
+            {copyright}
+          </Typography>
+        </StyledToolbar>
+      </AppBar>
+    </ThemeProvider>
   )
 }
 
