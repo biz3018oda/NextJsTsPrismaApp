@@ -8,8 +8,8 @@ import Button from "@mui/material/Button";
  * Section - 商品PR
  */
 const PublicRelationsSection = () => {
-  const serviceName = "VinChain";
-  const wineName = "THE TYPE A";
+  const serviceName = "VIN CHAIN";
+  const wineName = "Vignoble Secret";
   const backgroundImageUrl = "/vine.jpeg";
 
   return (
