@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import Lineup from "./Lineup";
+import CollectionLists from "./CollectionLists";
 
 const info = [
   {
@@ -51,36 +52,22 @@ const info = [
  * Section - コレクション
  */
 const CollectionSection = () => {
+  const title = "コレクション";
 
   return (
-    <Box
-      aria-label="content-collection"
-      component="section"
-      sx={{ padding: "80px 40px" }}
-    >
-      <Typography variant="h3" gutterBottom>
-        コレクション
-      </Typography>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid
-          container
-          spacing={{ xs: 2, md: 3 }}
-          columns={{ xs: 5, sm: 8, md: 12 }}
+      <Box
+        aria-label="content-collection"
+      >
+        <Box
+          component="section"
+          sx={{ padding: "80px 40px" }}
         >
-          {info.map(({ id, name, explain, price, img, url }) => (
-            <Grid key={id} size={{ xs: 2, sm: 4, md: 3 }}>
-              <Lineup
-                name={name}
-                explain={explain}
-                price={price}
-                img={img}
-                url="http"
-              />
-            </Grid>
-          ))}
-        </Grid>
+          <Typography variant="h2" gutterBottom>
+            {title}
+          </Typography>
+          <CollectionLists />
+        </Box>
       </Box>
-    </Box>
   );
 };
 
