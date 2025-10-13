@@ -14,7 +14,6 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 type Props = {
   familyname: string,
@@ -150,7 +149,6 @@ const Header = ({ familyname, firstname, img }: Props) => {
                   aria-label="account of current user"
                   color="inherit"
                 >
-                  {/* <AccountCircleIcon /> */}
                   <Avatar
                     alt="account-img"
                     src={img}

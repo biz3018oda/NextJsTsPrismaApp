@@ -1,50 +1,39 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "../theme/theme";
-import Header from "../components/layouts/header/Header";
-import Main from "../components/layouts/main/Main";
-import Footer from "../components/layouts/footer/Footer";
+import { User } from "../types/User";
+import ApplicationContainer from '@/components/layouts/ApplicationContainer';
+import Main from "@/components/layouts/main/Main";
 
-type User = {
-  id: number;
-  number: string;
-  familyname: string;
-  firstname: string;
-  email: string;
-  img: string;
-};
 
 export default function HomePage() {
-  const url = "/api/users/";
-  const type = "number";
   const number = "30305637";
-
-  // const [users, setUsers] = useState<User[]>([])
-  const [user, setUser] = useState<User>({
-    id: 0,
-    number: "",
-    familyname: "",
-    firstname: "",
-    email: "",
-    img: "",
-  });
+  const api = "/api/users";
+  const apiUrl = `${api}?number=${number}`;
+  const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
-    fetch(url + "?" + type + "=" + number)
-      .then((res) => res.json())
-      .then((data) => setUser(data));
+    const fetchUser = async () => {
+      try {
+        const res = await fetch(apiUrl);
+
+        if (!res.ok) {
+          throw new Error("ユーザー取得に失敗しました");
+        }
+
+        const data: User = await res.json();
+        setUser(data);
+      } catch (error) {
+        console.error("ユーザー情報の取得エラー:", error);
+        setUser(null); // 失敗時は null
+      }
+    };
+
+    fetchUser();
   }, []);
 
   return (
-    <ThemeProvider theme={theme}>
-      <Header
-        familyname={user.familyname}
-        firstname={user.firstname}
-        img={user.img}
-      />
+    <ApplicationContainer user={user}>
       <Main />
-      <Footer />
-    </ThemeProvider>
+    </ApplicationContainer>
   );
 }
