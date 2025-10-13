@@ -2,7 +2,12 @@
 import { useEffect, useState } from "react";
 import { User } from "../types/User";
 import ApplicationContainer from '@/components/layouts/ApplicationContainer';
-import Main from "@/components/layouts/main/Main";
+import PublicRelationsSection from "@/components/layouts/main/PublicRelationsSection";
+import CollectionSection from '@/components/layouts/main/CollectionSection'
+import NewItemsSection from "@/components/layouts/main/NewItemsSection";
+import NewsSection from "@/components/layouts/main/NewsSection";
+import ServiceSection from "@/components/layouts/main/ServiceSection";
+import PeopleSection from "@/components/layouts/main/PeopleSection";
 
 
 export default function HomePage() {
@@ -33,7 +38,13 @@ export default function HomePage() {
 
   return (
     <ApplicationContainer user={user}>
-      <Main />
+      {/* mainコンテンツ */}
+      <PublicRelationsSection />
+      <CollectionSection />
+      <NewItemsSection />
+      <NewsSection />
+      <ServiceSection />
+      <PeopleSection />
     </ApplicationContainer>
   );
 }

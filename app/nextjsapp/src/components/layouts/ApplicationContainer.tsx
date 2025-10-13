@@ -19,8 +19,7 @@ const ApplicationContainer = ({ children, user }: ApplicationContainerProps) => 
         firstname={user?.firstname ?? ""}
         img={user?.img ?? ""}
       />
-      {/* <main>{children}</main> */}
-      {children}
+      <main>{children}</main>
       <Footer />
     </ThemeProvider>
   )
