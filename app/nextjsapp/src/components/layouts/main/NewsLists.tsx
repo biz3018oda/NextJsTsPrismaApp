@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
-import { Box, Card, CardContent, CardMedia, Typography, MobileStepper, Button } from '@mui/material';
+import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography, MobileStepper, Button } from '@mui/material';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
@@ -8,62 +13,79 @@ import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 const steps = [
   {
     id: 1,
-    name: 'A.Bさん',
+    name: '新プロジェクト',
+    date: '10月14日, 2025',
     description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 2,
-    name: 'C・Dさん',
+    name: 'マーケット',
+    date: '09月13日, 2025',
     description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 3,
-    name: 'E・Fさん',
-    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    name: 'コラボ',
+    date: '08月12日, 2025',
+    description: 'クリエイターNとXXXを創設',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 4,
-    name: 'G・Hさん',
+    name: '今年のワインの売れ行き',
+    date: '10月14日, 2025',
     description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 5,
-    name: 'I・Jさん',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    name: '新プロジェクト',
+    date: '10月14日, 2025',
+    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 6,
-    name: 'K・Lさん',
-    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    name: 'マーケット',
+    date: '09月13日, 2025',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 7,
-    name: 'I・Jさん',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    name: 'コラボ',
+    date: '08月12日, 2025',
+    description: 'クリエイターNとXXXを創設',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
     id: 8,
-    name: 'K・Lさん',
-    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 9,
-    name: 'I・Jさん',
+    name: 'マーケット',
+    date: '09月13日, 2025',
     description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
   {
+    id: 9,
+    name: 'コラボ',
+    date: '08月12日, 2025',
+    description: 'クリエイターNとXXXを創設',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
+  },
+  {
     id: 10,
-    name: 'K・Lさん',
-    description: 'お気に入りの1本から始まる、奥深い知識の旅。',
+    name: 'マーケット',
+    date: '09月13日, 2025',
+    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
+    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
+  },
+  {
+    id: 11,
+    name: 'コラボ',
+    date: '08月12日, 2025',
+    description: 'クリエイターNとXXXを創設',
     image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
   },
 ];
@@ -71,35 +93,31 @@ const steps = [
 export default function NewsLists() {
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Math.ceil(steps.length / 3); // 3列ごとにページが進む
+  const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
+  const maxSteps = Math.ceil(steps.length / 3); // 3列
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, maxSteps - 1));
+    setActiveStep((prev) => Math.min(prev + 1, maxSteps - 1));
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
+    setActiveStep((prev) => Math.max(prev - 1, 0));
   };
 
-  // 1ページに表示する3つのアイテム
+  const handleExpandClick = (id: number) => {
+    setExpandedCardId((prev) => (prev === id ? null : id));
+  };
+
   const displayPeople = steps.slice(activeStep * 3, (activeStep + 1) * 3);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       <MobileStepper
-        aria-label="stepper-btn"
         variant="dots"
         steps={maxSteps}
         position="static"
         activeStep={activeStep}
-        sx={{
-          maxWidth: 400,
-          flexGrow: 1,
-          gap: 2,
-          backgroundColor: 'unset',
-          justifyContent: 'center',
-          mt: 5,
-        }}
+        sx={{ maxWidth: 400, flexGrow: 1, gap: 2, backgroundColor: 'unset', justifyContent: 'center', mt: 5 }}
         nextButton={
           <Button
             size="small"
@@ -152,36 +170,31 @@ export default function NewsLists() {
         }
       />
 
-      <Box sx={{ display: 'flex', overflow: 'hidden', justifyContent: 'center', gap: 2 }}>
-        {displayPeople.map((person, index) => (
-          <Box
-            key={person.id}
-            sx={{
-              px: 2,
-              pb: 2,
-              width: 'calc(33.33% - 16px)', // 常に3列表示にする
-              display: 'flex',
-              justifyContent: 'center',
-            }}
-          >
-            <Card sx={{ borderRadius: 2, boxShadow: 3, width: '100%' }}>
-              <CardMedia
-                component="img"
-                height="220"
-                image={person.image}
-                alt={person.name}
-                sx={{ width: '100%', height: 'auto', objectFit: 'cover' }}
-              />
-              <CardContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                <Typography variant="h6" color="text.secondary">
-                  {person.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  {person.description}
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
+      <Box sx={{ display: 'flex', width: '100%', justifyContent: 'center', gap: 2, px: 2, mt: 2 }}>
+        {displayPeople.map((person) => (
+          <Card key={person.id} sx={{ width: 'calc(33.33% - 16px)', maxWidth: 345 }}>
+            <CardHeader
+              avatar={
+                <Avatar sx={{ bgcolor: "secondary.main" }} aria-label="person">
+                  {person.name[0]}
+                </Avatar>
+              }
+              title={person.name}
+              subheader={person.date}
+            />
+            <CardMedia
+              component="img"
+              height="194"
+              image={person.image}
+              alt={person.name}
+              sx={{ objectFit: 'cover' }}
+            />
+            <CardContent>
+              <Typography variant="body2" color="text.secondary">
+                {person.description}
+              </Typography>
+            </CardContent>
+          </Card>
         ))}
       </Box>
     </Box>

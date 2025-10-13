@@ -2,7 +2,7 @@
 
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import PeopleLivingWithWine from "./PeopleLivingWithWine";
+import PeopleLists from "./PeopleLists";
 
 
 /**
@@ -20,7 +20,7 @@ const PeopleSection = () => {
       <Typography variant="h2" gutterBottom>
         {title}
       </Typography>
-      <PeopleLivingWithWine />
+      <PeopleLists />
     </Box>
   );
 };
