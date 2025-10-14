@@ -24,7 +24,7 @@ let pages: { title: string; url: string }[] = [
     },
     {
       title: 'プライバシーポリシー',
-      url: 'privacy-policy',
+      url: '/privacy-policy',
     }
 ];
 

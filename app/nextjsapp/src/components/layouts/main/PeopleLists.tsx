@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as peopleListsData from '../../../test/peopleListsData.json';
 import { useTheme } from '@mui/material/styles';
 import {
   Box,
@@ -8,100 +9,12 @@ import {
   MobileStepper,
   Button,
 } from '@mui/material';
-import Link from '@mui/material/Link';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
-interface Profile {
-  id: number;
-  name: string;
-  nick: string;
-  impressions: string;
-  image: string;
-}
-
-const profiles: Profile[] = [
-  {
-    id: 1,
-    name: 'Emma Watson',
-    nick: '@EmWatson',
-    impressions: 'このワインを囲むと、不思議と会話が弾んで、心の距離もぐっと近づく気がします。',
-    image:
-      'https://s-media-cache-ak0.pinimg.com/236x/c5/86/e6/c586e6afd87ee357bbab52df241480ac.jpg',
-  },
-  {
-    id: 2,
-    name: 'Daniel Radcliffe',
-    nick: '@DanRad',
-    impressions: '一緒にワインを楽しむ時間が、自然と私たちの絆を深めてくれました。',
-    image: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2',
-  },
-  {
-    id: 3,
-    name: 'Hermione Granger',
-    nick: '@HGranger',
-    impressions: '丁寧に選ばれた一本が、ただの食事を特別なひとときに変えてくれます。',
-    image: 'https://images.unsplash.com/photo-1759784839707-a32c910a7747',
-  },
-  {
-    id: 4,
-    name: 'Ron Weasley',
-    nick: '@RonW',
-    impressions: 'このワインがあるだけで、家族や友人との距離が驚くほど近く感じられました。',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e',
-  },
-  {
-    id: 5,
-    name: 'Luna Lovegood',
-    nick: '@LLove',
-    impressions: 'グラスを重ねるたびに、少しずつお互いの気持ちが近づいていくようでした。',
-    image: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91',
-  },
-  {
-    id: 6,
-    name: 'Neville Longbottom',
-    nick: '@NevLong',
-    impressions: '特別なことはしていないのに、このワインがあるだけで心が通い合う気がします。',
-    image: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c',
-  },
-  {
-    id: 7,
-    name: 'Ginny Weasley',
-    nick: '@GinWeas',
-    impressions: '静かに流れる時間とワインの香りが、自然と会話を深めてくれました。',
-    image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1',
-  },
-  {
-    id: 8,
-    name: 'Severus Snape',
-    nick: '@SSevSnape',
-    impressions: '久しぶりに家族と本音で話せた気がします。きっとワインのおかげです。',
-    image: 'https://images.unsplash.com/photo-1527980965255-d3b416303d12',
-  },
-  {
-    id: 9,
-    name: 'Neville Longbottom',
-    nick: '@NevLong',
-    impressions: '特別なことはしていないのに、このワインがあるだけで心が通い合う気がします。',
-    image: 'https://plus.unsplash.com/premium_photo-1758893734322-172b22ba5278',
-  },
-  {
-    id: 10,
-    name: 'Ginny Weasley',
-    nick: '@GinWeas',
-    impressions: '静かに流れる時間とワインの香りが、自然と会話を深めてくれました。',
-    image: 'https://plus.unsplash.com/premium_photo-1759793983877-d1c49cdd37eb',
-  },
-  {
-    id: 11,
-    name: 'Severus Snape',
-    nick: '@SSevSnape',
-    impressions: '久しぶりに家族と本音で話せた気がします。きっとワインのおかげです。',
-    image: 'https://images.unsplash.com/photo-1758539412442-23b83300f0bd',
-  },
-];
 
 export default function EmmaProfilesGrid() {
+  const profiles = peopleListsData['data'];
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const itemsPerPage = 4;

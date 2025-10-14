@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import * as newsListsData from '../../../test/newsListsData.json';
 import { useTheme } from '@mui/material/styles';
 import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography, MobileStepper, Button } from '@mui/material';
 import { red } from '@mui/material/colors';
@@ -10,87 +11,8 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 
-const steps = [
-  {
-    id: 1,
-    name: '新プロジェクト',
-    date: '10月14日, 2025',
-    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 2,
-    name: 'マーケット',
-    date: '09月13日, 2025',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 3,
-    name: 'コラボ',
-    date: '08月12日, 2025',
-    description: 'クリエイターNとXXXを創設',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 4,
-    name: '今年のワインの売れ行き',
-    date: '10月14日, 2025',
-    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 5,
-    name: '新プロジェクト',
-    date: '10月14日, 2025',
-    description: '自然の中で土に触れ、ワインを楽しむ贅沢なひととき。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 6,
-    name: 'マーケット',
-    date: '09月13日, 2025',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 7,
-    name: 'コラボ',
-    date: '08月12日, 2025',
-    description: 'クリエイターNとXXXを創設',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 8,
-    name: 'マーケット',
-    date: '09月13日, 2025',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 9,
-    name: 'コラボ',
-    date: '08月12日, 2025',
-    description: 'クリエイターNとXXXを創設',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 10,
-    name: 'マーケット',
-    date: '09月13日, 2025',
-    description: '平日は東京、週末はワイナリーのそばで静かな時間を。',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-  {
-    id: 11,
-    name: 'コラボ',
-    date: '08月12日, 2025',
-    description: 'クリエイターNとXXXを創設',
-    image: 'https://images.unsplash.com/photo-1563298723-dcfebaa392e3',
-  },
-];
-
 export default function NewsLists() {
+  const steps = newsListsData['data'];
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);

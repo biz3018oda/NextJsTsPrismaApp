@@ -19,8 +19,31 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Link from '@mui/material/Link';
 
 
-const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
+// const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+
+let pages: { id: number, title: string; url: string }[] = [
+    {
+      id: 1,
+      title: 'コレクション',
+      url: '/collection',
+    },
+    {
+      id: 2,
+      title: 'VinChainとは',
+      url: '/how-to-service',
+    },
+    {
+      id: 3,
+      title: '始め方',
+      url: '/start',
+    },
+    {
+      id: 4,
+      title: 'FAQ',
+      url: '/faq',
+    }
+];
 
 const Header = () => {
   const cookieUsers = {
@@ -90,8 +113,8 @@ const Header = () => {
                 sx={{ display: { xs: 'block', md: 'none' } }}
               >
                 {pages.map((page) => (
-                  <MenuItem key={page} onClick={handleCloseNavMenu}>
-                    <Typography color="primary.contrastText" sx={{ textAlign: 'center' }}>{page}</Typography>
+                  <MenuItem key={page.id} onClick={handleCloseNavMenu}>
+                    <Link href={page.url} color="primary.contrastText" sx={{ textAlign: 'center' }}>{page.title}</Link>
                   </MenuItem>
                 ))}
               </Menu>
@@ -121,11 +144,12 @@ const Header = () => {
             >
               {pages.map((page) => (
                 <Button
-                  key={page}
+                  key={page.id}
                   onClick={handleCloseNavMenu}
+                  href={page.url}
                   sx={{ my: 2, color: 'primary.contrastText', display: 'block' }}
                 >
-                  {page}
+                  {page.title}
                 </Button>
               ))}
             </Box>
