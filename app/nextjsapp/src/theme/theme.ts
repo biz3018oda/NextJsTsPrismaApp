@@ -1,10 +1,11 @@
 import { createTheme } from '@mui/material/styles';
-import { indigo, teal } from '@mui/material/colors';
+import { indigo, teal, grey } from '@mui/material/colors';
 
 
 const theme = createTheme({
   palette: {
     primary: {
+      light: grey[300],
       main: "#fffffc",
       contrastText: '#000000',
     },

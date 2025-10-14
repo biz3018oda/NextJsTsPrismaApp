@@ -48,7 +48,7 @@ const HeroSection = ({}) => {
           >
             {/* ロゴ部分 */}
             <Typography
-              variant="h3"
+              variant="h4"
               component="h1"
               sx={{
                 fontWeight: 700,
@@ -57,6 +57,19 @@ const HeroSection = ({}) => {
               }}
             >
               {serviceName}
+            </Typography>
+            {/* 商品名 */}
+            <Typography
+              variant="h3"
+              component="h1"
+              color="primary.light"
+              sx={{
+                fontWeight: 700,
+                letterSpacing: "0.1em",
+                mb: 4,
+              }}
+            >
+              {wineName}
             </Typography>
             {/* リード文 */}
             <Typography
