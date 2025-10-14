@@ -16,6 +16,8 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import Link from '@mui/material/Link';
+
 
 const pages = ['コレクション', 'VinChainとは', '始め方', 'FAQ'];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
@@ -48,11 +50,17 @@ const Header = () => {
   return (
     <ThemeProvider theme={theme}>
       <AppBar position="static">
-        <Container maxWidth="xl"  sx={{ borderBottom: "1px solid #e9e9eb"}}>
+        <Container
+          maxWidth="xl"
+          sx={{
+            borderBottom: "1px solid",
+            borderColor: "#e9e9eb"
+          }}
+        >
           <Toolbar disableGutters>
-            <CameraIcon />
+            <Link href="/" color="secondary"><CameraIcon /></Link>
             <Box aria-label="menu-block" sx={{ flexGrow: 1, display: { xs: 'none', md: 'block' } }}></Box>
-  
+
             <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
               <IconButton
                 size="large"
