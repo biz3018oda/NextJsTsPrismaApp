@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Link from '@mui/material/Link';
 
 /**
  * Section - 商品PR
@@ -11,6 +12,7 @@ const PublicRelationsSection = () => {
   const serviceName = "VIN CHAIN";
   const wineName = "Vignoble Secret";
   const backgroundImageUrl = "/vine.jpeg";
+  const btnTitle = "詳細を見る";
 
   return (
     <Box
@@ -30,13 +32,17 @@ const PublicRelationsSection = () => {
       <Stack spacing={2} sx={{ alignItems: "center" }}>
         <Typography variant="h6">{serviceName}</Typography>
         <Typography variant="h4">{wineName}</Typography>
-        <Button
-          variant="contained"
-          color="secondary"
-          sx={{ width: "200px", padding: "12px 24px", borderRadius: "25px" }}
+        <Link
+          href="/items/VignobleSecret"
+          sx={{
+            width: "200px",
+            padding: "12px 24px",
+            borderRadius: "25px",
+            backgroundColor:"secondary.main"
+          }}
         >
-          詳細を見る
-        </Button>
+          {btnTitle}
+        </Link>
       </Stack>
     </Box>
   );
