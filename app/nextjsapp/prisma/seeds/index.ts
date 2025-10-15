@@ -1,11 +1,16 @@
 import { PrismaClient } from '../../src/generated/prisma'
-import seedUsers from './2025_10_11_0430_users'
+import seedUsers from './2025_10_15_1936_users'
+import seedOwners from './2025_10_15_1936_owners'
 
 
 const prisma = new PrismaClient()
 
 async function main() {
+  await prisma.user.deleteMany({})
+  await prisma.owner.deleteMany({})
+
   await seedUsers()
+  await seedOwners()
 }
 main()
   .then(async () => {
