@@ -1,41 +1,35 @@
-import { PrismaClient } from '../../../../src/generated/prisma'
-import { NextRequest, NextResponse } from 'next/server'
+import { NextRequest } from "next/server";
+import { prisma } from "../../../../lib/prisma";
 
-type User = {
-  id: number
-  name: string
-}
-
-const prisma = new PrismaClient()
-
-// GETリクエストの処理
 export async function GET(request: NextRequest) {
-  // const users: User[] = [
-    // { id: 1, name: 'John Doe' },
-    // { id: 2, name: 'Jane Doe' }
-  // ]
-  //return Response.json(users)
-  const searchParams = request.nextUrl.searchParams
-  const query = searchParams.get('number')
-  let number: string = query ? query : ''
+  try {
+    const searchParams = request.nextUrl.searchParams;
+    const number = searchParams.get("number");
+    console.log(number);
 
-  const user = await prisma.user.findUnique({
-    where: {
-      //number: '30305637',
-      number: number,
-    },
-  })
+    if (!number) {
+      return new Response(JSON.stringify({ error: "number param is required" }), {
+        status: 400,
+      });
+    }
 
-  return Response.json(user)
-}
+    const user = await prisma.user.findUnique({
+      where: { number },
+    });
 
-// POSTリクエストの処理
-export async function POST(request: NextRequest) {
-  const data = await request.json()
-  const newUser: User = {
-    id: Date.now(),
-    name: data.name
+    if (!user) {
+      return new Response(JSON.stringify({ error: "User not found" }), {
+        status: 404,
+      });
+    }
+
+    return new Response(JSON.stringify(user), {
+      status: 200,
+    });
+  } catch (error) {
+    console.error("GET /api/users error:", error);
+    return new Response(JSON.stringify({ error: "Internal Server Error" }), {
+      status: 500,
+    });
   }
-
-  return NextResponse.json(newUser, { status: 201 })
 }
