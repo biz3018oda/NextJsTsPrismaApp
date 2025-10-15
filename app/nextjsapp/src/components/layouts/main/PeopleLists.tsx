@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as peopleListsData from '../../../test/peopleListsData.json';
 import { useTheme } from '@mui/material/styles';
 import {
@@ -13,8 +13,27 @@ import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 
+type Owners = {
+  id: string;
+  familyname: string;
+  firstname: string;
+  nick: string;
+  impressions: string;
+  image: string;
+};
+
 export default function EmmaProfilesGrid() {
-  const profiles = peopleListsData['data'];
+  // const profiles = peopleListsData['data'];
+  const [profiles, setProfiles] = useState<Owners[]>([]);
+  useEffect(() => {
+    fetch("/api/owners")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("---get owner result---:", data);
+        setProfiles(data);
+      });
+  }, []);
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const itemsPerPage = 4;
@@ -129,7 +148,7 @@ export default function EmmaProfilesGrid() {
                 }}
               >
                 <Typography variant="h6" fontWeight={800} color="text.secondary">
-                  {person.name}
+                  {person.familyname}{person.firstname}
                 </Typography>
                 <Typography variant="body2" fontWeight={500}>
                   {person.nick}
@@ -155,7 +174,7 @@ export default function EmmaProfilesGrid() {
                 fontSize: '1.5rem',
               }}
             >
-              {person.name.charAt(0)}
+              {person.firstname.charAt(0)}
             </Avatar>
 
             {/* 統計エリア */}
