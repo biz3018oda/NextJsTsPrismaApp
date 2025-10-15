@@ -15,10 +15,20 @@ datasource db {
 }
 
 model User {
-  id            Int      @id @default(autoincrement())
-  number        String   @unique
-  familyname    String?
-  firstname     String?
-  email         String?
-  img           String?
+  id         Int     @id @default(autoincrement())
+  number     String  @unique
+  familyname String?
+  firstname  String?
+  email      String?
+  img        String?
+}
+
+
+model Owner {
+  id           Int     @id @default(autoincrement())
+  familyname   String?
+  firstname    String?
+  nick         String?
+  impressions  String?
+  image        String?
 }
