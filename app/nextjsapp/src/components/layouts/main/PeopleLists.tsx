@@ -22,7 +22,7 @@ type Owners = {
   image: string;
 };
 
-export default function EmmaProfilesGrid() {
+export default function PeopleLists() {
   // const profiles = peopleListsData['data'];
   const [profiles, setProfiles] = useState<Owners[]>([]);
   useEffect(() => {
