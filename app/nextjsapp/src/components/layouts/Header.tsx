@@ -31,7 +31,7 @@ let pages: { id: number, title: string; url: string }[] = [
     {
       id: 2,
       title: 'VinChainとは',
-      url: '/how-to-service',
+      url: '/service',
     },
     {
       id: 3,

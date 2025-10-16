@@ -13,6 +13,7 @@ const PublicRelationsSection = () => {
   const wineName = "Vignoble Secret";
   const backgroundImageUrl = "/vine.jpeg";
   const btnTitle = "詳細を見る";
+  const pageUrl = "/collection/VignobleSecret";
 
   return (
     <Box
@@ -33,7 +34,7 @@ const PublicRelationsSection = () => {
         <Typography variant="h6">{serviceName}</Typography>
         <Typography variant="h4">{wineName}</Typography>
         <Link
-          href="/items/VignobleSecret"
+          href={pageUrl}
           sx={{
             width: "200px",
             padding: "12px 24px",
