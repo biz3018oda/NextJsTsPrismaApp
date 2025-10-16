@@ -23,21 +23,21 @@ type Owners = {
 };
 
 export default function PeopleLists() {
-  // const profiles = peopleListsData['data'];
-  const [profiles, setProfiles] = useState<Owners[]>([]);
+  // const items = peopleListsData['data'];
+  const [items, setItems] = useState<Owners[]>([]);
   useEffect(() => {
     fetch("/api/owners")
       .then((res) => res.json())
       .then((data) => {
         console.log("---get owner result---:", data);
-        setProfiles(data);
+        setItems(data);
       });
   }, []);
 
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const itemsPerPage = 4;
-  const maxSteps = Math.ceil(profiles.length / itemsPerPage);
+  const maxSteps = Math.ceil(items.length / itemsPerPage);
 
   const handleNext = () => {
     setActiveStep((prev) => Math.min(prev + 1, maxSteps - 1));
@@ -47,7 +47,7 @@ export default function PeopleLists() {
     setActiveStep((prev) => Math.max(prev - 1, 0));
   };
 
-  const displayProfiles = profiles.slice(
+  const displayProfiles = items.slice(
     activeStep * itemsPerPage,
     activeStep * itemsPerPage + itemsPerPage
   );

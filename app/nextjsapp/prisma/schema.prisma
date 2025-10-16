@@ -23,6 +23,12 @@ model User {
   img        String?
 }
 
+model Collection {
+  id      Int     @id @default(autoincrement())
+  image   String?
+  title   String?
+  author  String?
+}
 
 model Owner {
   id           Int     @id @default(autoincrement())

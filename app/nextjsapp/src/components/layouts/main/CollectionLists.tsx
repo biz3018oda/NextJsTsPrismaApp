@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as CollectionListsData from '../../../test/collectionListsData.json';
 import { useTheme } from '@mui/material/styles';
 import { Box, IconButton } from '@mui/material';
@@ -7,26 +7,27 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import InfoIcon from '@mui/icons-material/Info';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 
+type Collections = {
+  id: string;
+  image: string;
+  title: string;
+  author: string;
+};
 
 const CollectionLists = () => {
-  const steps = CollectionListsData['data'];
+  //const steps = CollectionListsData['data'];
 
-  const theme = useTheme();
+  const [items, setItems] = useState<Collections[]>([]);
+  useEffect(() => {
+    fetch("/api/collections")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("---get owner result---:", data);
+        setItems(data);
+      });
+  }, []);
+
   const columns = 4;
-  const itemsPerPage = steps.length; // 2行 × 4列 = 8アイテムずつ表示
-
-  const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Math.ceil(steps.length / itemsPerPage);
-
-  const handleNext = () => {
-    setActiveStep((prev) => Math.min(prev + 1, maxSteps - 1));
-  };
-
-  const handleBack = () => {
-    setActiveStep((prev) => Math.max(prev - 1, 0));
-  };
-
-  const displayItems = steps.slice(activeStep * itemsPerPage, (activeStep + 1) * itemsPerPage);
 
   return (
     <Box sx={{ width: '100%', maxWidth: 1200, mx: 'auto' }}>
@@ -39,7 +40,7 @@ const CollectionLists = () => {
         }}
         aria-label="image-list"
       >
-        {displayItems.map((item) => (
+        {items.map((item) => (
           <Box
             key={item.id}
             sx={{
@@ -51,8 +52,8 @@ const CollectionLists = () => {
             }}
           >
             <img
-              src={`${item.img}?w=600&fit=crop&auto=format`}
-              srcSet={`${item.img}?w=600&fit=crop&auto=format&dpr=2 2x`}
+              src={`${item.image}?w=600&fit=crop&auto=format`}
+              srcSet={`${item.image}?w=600&fit=crop&auto=format&dpr=2 2x`}
               alt={item.title}
               loading="lazy"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
