@@ -33,17 +33,13 @@ const PublicRelationsSection = () => {
       <Stack spacing={2} sx={{ alignItems: "center" }}>
         <Typography variant="h6">{serviceName}</Typography>
         <Typography variant="h4">{wineName}</Typography>
-        <Link
+        <Button
+          variant="contained"
           href={pageUrl}
-          sx={{
-            width: "200px",
-            padding: "12px 24px",
-            borderRadius: "25px",
-            backgroundColor:"secondary.main"
-          }}
-        >
+          color="secondary"
+          >
           {btnTitle}
-        </Link>
+        </Button>
       </Stack>
     </Box>
   );
