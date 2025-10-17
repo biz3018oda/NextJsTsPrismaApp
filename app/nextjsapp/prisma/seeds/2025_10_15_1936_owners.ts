@@ -2,6 +2,7 @@ import { PrismaClient } from '../../src/generated/prisma'
 
 const prisma = new PrismaClient()
 
+
 export default async function seedOwners() {
   const emma = await prisma.owner.create({
     data: {

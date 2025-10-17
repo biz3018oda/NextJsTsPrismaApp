@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import * as CollectionListsData from '../../../test/collectionListsData.json';
+// import * as CollectionListsData from '../../../test/collectionListsData.json';
 import { useTheme } from '@mui/material/styles';
 import { Box, IconButton } from '@mui/material';
 import ImageListItem from '@mui/material/ImageListItem';

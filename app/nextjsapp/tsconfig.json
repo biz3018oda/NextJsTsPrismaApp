@@ -21,7 +21,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["jest", "jest-fetch-mock"]
+    "types": ["node", "jest", "jest-fetch-mock"]
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]

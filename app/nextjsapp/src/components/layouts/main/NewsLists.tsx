@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import * as newsListsData from '../../../test/newsListsData.json';
+import React, { useEffect, useState } from 'react';
+// import * as newsListsData from '../../../test/newsListsData.json';
 import { useTheme } from '@mui/material/styles';
 import { Box, Card, CardHeader, CardMedia, CardContent, CardActions, Collapse, Avatar, IconButton, Typography, MobileStepper, Button } from '@mui/material';
 import { red } from '@mui/material/colors';
@@ -10,13 +10,32 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
+type News = {
+  id: number;
+  name: string;
+  date: string;
+  description: string;
+  image: string;
+};
 
 export default function NewsLists() {
-  const steps = newsListsData['data'];
+  // const steps = newsListsData['data'];
+
+    const [items, setItems] = useState<News[]>([]);
+
+    useEffect(() => {
+      fetch("/api/news")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("---get news result---:", data);
+          setItems(data);
+        });
+    }, []);
+
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
   const [expandedCardId, setExpandedCardId] = useState<number | null>(null);
-  const maxSteps = Math.ceil(steps.length / 3); // 3列
+  const maxSteps = Math.ceil(items.length / 3); // 3列
 
   const handleNext = () => {
     setActiveStep((prev) => Math.min(prev + 1, maxSteps - 1));
@@ -30,7 +49,7 @@ export default function NewsLists() {
     setExpandedCardId((prev) => (prev === id ? null : id));
   };
 
-  const displayPeople = steps.slice(activeStep * 3, (activeStep + 1) * 3);
+  const displayPeople = items.slice(activeStep * 3, (activeStep + 1) * 3);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

@@ -30,6 +30,14 @@ model Collection {
   author  String?
 }
 
+model News {
+  id           Int     @id @default(autoincrement())
+  name         String?
+  date         String?
+  description  String?
+  image        String?
+}
+
 model Owner {
   id           Int     @id @default(autoincrement())
   familyname   String?

@@ -25,6 +25,7 @@ describe('HomePage', () => {
 
     // fetch による state 更新を待つ
     await waitFor(() => {
+      // mainタグ表示確認
       const main = screen.getByRole('main');
       expect(main).toBeInTheDocument();
     });
