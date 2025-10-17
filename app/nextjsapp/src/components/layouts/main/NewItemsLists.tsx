@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import * as newItemsListsData from '../../../test/newItemsListsData.json';
+import React, { useEffect, useState } from 'react';
+// import * as newItemsListsData from '../../../test/newItemsListsData.json';
 import { useTheme } from '@mui/material/styles';
 import { Box, Card, CardContent, CardMedia, Typography, MobileStepper, Button } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
@@ -9,13 +9,31 @@ import ImageListItemBar from '@mui/material/ImageListItemBar';
 import IconButton from '@mui/material/IconButton';
 import InfoIcon from '@mui/icons-material/Info';
 
+type New = {
+  id: number;
+  img: string;
+  title: string;
+  author: string;
+};
 
 export default function NewItemsLists() {
-  const steps = newItemsListsData['data'];
+  // const steps = newItemsListsData['data'];
+
+    const [items, setItems] = useState<New[]>([]);
+
+    useEffect(() => {
+      fetch("/api/newItems")
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("---get new result---:", data);
+          setItems(data);
+        });
+    }, []);
+
   const rowNum = 3; // 表示する列の数
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Math.ceil(steps.length / rowNum); // 3列ごとにページが進む
+  const maxSteps = Math.ceil(items.length / rowNum); // 3列ごとにページが進む
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, maxSteps - 1));
@@ -26,7 +44,7 @@ export default function NewItemsLists() {
   };
 
   // 1ページに表示する3つのアイテム
-  const displayPeople = steps.slice(activeStep * rowNum, (activeStep + 1) * rowNum);
+  const displayPeople = items.slice(activeStep * rowNum, (activeStep + 1) * rowNum);
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>

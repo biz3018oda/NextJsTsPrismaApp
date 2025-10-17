@@ -1,9 +1,9 @@
 -- CreateTable
-CREATE TABLE "New" (
+CREATE TABLE "NewItem" (
     "id" SERIAL NOT NULL,
     "img" TEXT,
     "title" TEXT,
     "author" TEXT,
 
-    CONSTRAINT "New_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "NewItem_pkey" PRIMARY KEY ("id")
 );
