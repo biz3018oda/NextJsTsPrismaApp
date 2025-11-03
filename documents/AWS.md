@@ -16,6 +16,18 @@
 ✅ HTTP→HTTPSのリダイレクト設定（自動 or 手動）
 ```
 
+## サーバー構成
+
+| 項目         | 推奨設定                                                |
+| ------------ | ------------------------------------------------------- |
+| DNS 管理     | **Xserver で管理（無料・簡単）**                        |
+| サーバー     | **AWS EC2（WordPress ＋ Next.js 共存）**                |
+| SSL          | **Let’s Encrypt（無料自動更新）**                       |
+| 公開方法     | **Nginx でリバースプロキシ**                            |
+| ドメイン構成 | **`example.com` + `works.example.com` または `/works`** |
+
+➡ この構成により、**低コスト・高信頼・安全なポートフォリオ＋実績サイト**を実現できます。
+
 ## login
 
 ### コマンド
@@ -553,6 +565,7 @@ ssh-add -l
 ```
 
 ### node install
+
 ```
 $ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 
@@ -568,16 +581,20 @@ $ sudo npm install -g npm@latest
 ```
 
 ### 起動
+
 ```
 npm run build
 ```
+
 URL
+
 ```
 http://<EC2のパブリックIP>:3000
 ```
 
 ### インバウンドルール
-EC2 > セキュリティグループ > 任意のもの > インバウンドルール  
+
+EC2 > セキュリティグループ > 任意のもの > インバウンドルール
 
 ```
 「ルールを追加」
@@ -588,6 +605,403 @@ EC2 > セキュリティグループ > 任意のもの > インバウンドル�
 
 ソース：0.0.0.0/0
 ```
+
+## Xserver
+
+### Xserver のドメインを取得
+
+whois の代理のオプション付きで契約.  
+メールは支払い確認と同時刻に受信.
+
+```
+【XServerドメイン】■重要■ XServerアカウント登録完了のお知らせ  10月MM日(火) 23:07
+【XServerアカウント】ご利用料金お支払い確認のお知らせ  10月MM日(火) 23:57
+【XServerドメイン】ドメイン取得完了のお知らせ（XXドメイン名XX) 10月MM日(火) 23:57
+```
+
+### ネームサーバー
+
+#### IAM ユーザーに権限を付与（ルートアカウントで操作）
+
+1. ルートアカウントで AWS マネジメントコンソールにログイン
+2. **IAM → ユーザー → 対象の IAM ユーザー → アクセス権限タブ → アクセス権限を追加** をクリック
+3. **既存のポリシーを直接アタッチ** を選択
+4. 検索欄に `AmazonRoute53FullAccess` と入力
+5. 表示されたポリシーにチェックを入れ **アクセス権限の追加** をクリック
+
+> これで IAM ユーザーは Route 53 の操作が可能になります。
+
+---
+
+#### Route 53 でパブリックホストゾーンを作成
+
+1. IAM ユーザーで AWS マネジメントコンソールにログイン
+2. **Route 53 → ホストゾーン → ホストゾーンの作成** をクリック
+3. 入力項目：
+   - **ドメイン名**：Xserver で取得したドメイン（例：`example.com`）
+   - **タイプ**：パブリックホストゾーン
+4. 作成すると、AWS 側で自動的に **4 つの NS レコード** が生成され、  
+   ホストゾーン画面の **「値/トラフィックのルーティング先」** に表示されます
+
+---
+
+#### Route 53 で A レコードを作成
+
+1. AWS コンソールで **Route 53 → ホストゾーン → 対象ドメイン** を開く
+2. **「レコードを作成」** をクリック
+3. 以下の情報を入力
+
+| フィールド          | 設定例                                              |
+| ------------------- | --------------------------------------------------- |
+| 名前                | 空欄（ルートドメインの場合）、`www`（サブドメイン） |
+| タイプ              | A                                                   |
+| Alias               | No                                                  |
+| 値 / エンドポイント | Elastic IP（例：203.0.113.25）                      |
+| TTL                 | 300                                                 |
+
+4. **「レコードを作成」** をクリックして保存
+
+> ✅ ポイント: ルートドメインと www などサブドメインがあれば、それぞれ A レコードを作成
+
+---
+
+#### Xserver 側でネームサーバーを変更
+
+1. Xserver の **サーバーパネル → ドメイン → ドメイン設定** を開く
+2. 対象のドメインを選択
+3. **ネームサーバー設定** で、先ほど Route 53 で確認した **4 つの NS レコード** を入力
+4. 保存して反映を待つ（通常数分〜72 時間で DNS 浸透）
+
+> ⚠️ 注意  
+> 元々 Xserver の DNS を使っていた場合は、A/CNAME などの既存レコードも AWS 側に移行する必要があります。
+
+---
+
+#### バーチャルホストの追加設定を変更
+
+- ターミナルやコマンドプロンプトで確認
+
+```
+dig example.com
+dig www.example.com
+```
+
+- 結果.  
+  下記であれば完了してる.
+
+```
+% dig <ドメイン名>
+
+; <<>> DiG 9.10.6 <<>> <ドメイン名>
+;; global options: +cmd
+......
+
+;; OPT PSEUDOSECTION:
+....
+
+;; ANSWER SECTION:
+<ドメイン名>	300	IN	A	<Elastic IP>
+
+;; Query time: 65 msec
+....
+```
+
+---
+
+### アクセス先を変更
+
+Nginx になっていない場合などは問題がある.
+
+#### ブラウザから確認
+
+- URL
+
+```
+http://<ドメイン名>/
+```
+
+- 画面の表記
+
+```
+Apache2 Default Page
+```
+
+#### どのサーバーがポートを使用しているか確認
+
+下記は Apache じゃなかった
+
+```
+ubuntu@ip-172-31-38-193:~$ sudo lsof -i :80
+COMMAND  PID     USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+nginx    690     root    5u  IPv4   5927      0t0  TCP *:http (LISTEN)
+nginx    690     root    6u  IPv6   5928      0t0  TCP *:http (LISTEN)
+nginx   3094 www-data    5u  IPv4   5927      0t0  TCP *:http (LISTEN)
+nginx   3094 www-data    6u  IPv6   5928      0t0  TCP *:http (LISTEN)
+nginx   3095 www-data    5u  IPv4   5927      0t0  TCP *:http (LISTEN)
+nginx   3095 www-data    6u  IPv6   5928      0t0  TCP *:http (LISTEN)
+
+```
+
+#### wordpress ファイルが有効か確認
+
+下記であれば有効
+
+```
+$ ls -l /etc/nginx/sites-enabled/
+lrwxrwxrwx 1 root root  36 Oct 20 14:43 wordpress -> /etc/nginx/sites-available/wordpress
+```
+
+#### server_name がドメイン名に対応しているか確認
+
+```
+$ cat /etc/nginx/sites-available/wordpress | grep "server_name"
+    server_name XX.XXX.X.XXX;
+```
+
+#### 編集
+
+編集したら「Ctrl + O, Ctrl + X, Enter」押して終了
+
+```
+$ sudo nano /etc/nginx/sites-available/wordpress
+```
+
+内容
+
+```
+# Elastic IP にアクセスされた場合はドメインにリダイレクト
+server {
+    listen 80;
+    server_name XX.XXX.XX.XXX;  # Elastic IP
+    return 301 http://<ドメイン名>$request_uri;
+}
+
+# WordPress 用サーバーブロック
+server {
+    listen 80;
+    server_name <ドメイン名> www.<ドメイン名>;
+
+....
+
+}
+```
+
+#### 不要なサーバーブロック削除
+
+```
+sudo rm /etc/nginx/sites-enabled/default
+sudo rm /etc/nginx/sites-enabled/default.conf
+
+```
+
+#### Nginx を設定して読み込み
+
+```
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+#### wordpress の設定変更
+
+ログイン. → 設定. → 一般 で下記を変更
+
+```
+WordPress アドレス (URL) : http://<ドメイン名>
+サイトアドレス (URL) : http://<ドメイン名>
+```
+
+#### ブラウザや DNS のキャッシュクリア
+
+```
+sudo dscacheutil -flushcache
+sudo killall -HUP mDNSResponder
+
+```
+
+## SSL 証明書
+
+### Ubuntu
+
+```
+sudo apt update
+sudo apt install certbot python3-certbot-nginx -y
+
+```
+
+### Nginx 再起動
+
+```
+sudo systemctl restart nginx
+```
+
+### Nginx プライン Certbot で証明書発行
+
+```
+sudo certbot --nginx -d example.com
+または
+sudo certbot --nginx -d example.com -d www.example.com
+```
+
+結果
+
+```
+$ sudo certbot --nginx -d <ドメイン名>
+Saving debug log to /var/log/letsencrypt/letsencrypt.log
+Requesting a certificate for <ドメイン名>
+
+Successfully received certificate.
+Certificate is saved at: /etc/letsencrypt/live/<ドメイン名>/fullchain.pem
+Key is saved at:         /etc/letsencrypt/live/<ドメイン名>/privkey.pem
+This certificate expires on 2026-01-31.
+These files will be updated when the certificate renews.
+Certbot has set up a scheduled task to automatically renew this certificate in the background.
+
+Deploying certificate
+Successfully deployed certificate for <ドメイン名> to /etc/nginx/sites-enabled/wordpress
+Congratulations! You have successfully enabled HTTPS on https://<ドメイン名>
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+If you like Certbot, please consider supporting our work by:
+ * Donating to ISRG / Let's Encrypt:   https://letsencrypt.org/donate
+ * Donating to EFF:                    https://eff.org/donate-le
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+```
+
+### 表示確認
+
+```
+$ curl -I https://<ドメイン名>
+
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Sun, 02 Nov 2025 17:54:23 GMT
+Content-Type: text/html; charset=UTF-8
+Connection: keep-alive
+Link: <https://<ドメイン名>/wp-json/>; rel="https://api.w.org/"
+Link: <https://<ドメイン名>/wp-json/wp/v2/pages/8>; rel="alternate"; title="JSON"; type="application/json"
+Link: <https://<ドメイン名>/>; rel=shortlink
+```
+
+もし上記が返ってこない場合
+
+### OS ファイアオールの確認
+
+下記の場合は HTTP は開放されてて、HTTPS が開放されていない
+
+```
+$ sudo ufw status
+$ sudo ufw allow 443/tcp
+$ sudo ufw reload
+
+Status: active
+
+To                         Action      From
+--                         ------      ----
+Nginx HTTP                 ALLOW       Anywhere
+OpenSSH                    ALLOW       Anywhere
+Nginx HTTP (v6)            ALLOW       Anywhere (v6)
+OpenSSH (v6)               ALLOW       Anywhere (v6)
+
+Rule added
+Rule added (v6)
+Firewall reloaded
+```
+
+443 を開放
+
+```
+sudo ufw allow 443/tcp
+sudo ufw reload
+
+```
+
+確認
+
+```
+sudo ufw status
+```
+
+### SSL 自動更新コマンド
+
+```
+sudo certbot renew
+```
+
+## ベーシック認証追加
+
+### パスワードファイル生成
+
+```
+sudo apt install apache2-utils  # htpasswd コマンドが必要
+sudo htpasswd -c /etc/nginx/.htpasswd ユーザー名
+```
+
+### sites-available を更新
+
+- ファイルパス
+
+```
+/etc/nginx/sites-available/wordpress
+```
+
+- 内容
+
+```
+server {
+    listen 443 ssl;
+    server_name example.com;
+
+    root /var/www/html;
+    index index.php index.html index.htm;
+
+    # SSL 設定（Certbot が発行した証明書）
+    ssl_certificate /etc/letsencrypt/live/example.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/example.com/privkey.pem;
+
+    # セキュリティ向上の SSL 設定（必要に応じて追加）
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    # ベーシック認証
+    location / {
+        auth_basic "Restricted";
+        auth_basic_user_file /etc/nginx/.htpasswd;
+
+        try_files $uri $uri/ /index.php?$args;
+    }
+
+    # PHP 実行用
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;  # PHP バージョンに応じて変更
+    }
+
+    # 静的ファイルキャッシュ（任意）
+    location ~* \.(jpg|jpeg|gif|png|css|js|ico|webp|tiff|ttf|svg)$ {
+        expires 30d;
+        access_log off;
+    }
+}
+
+# HTTP (80) は HTTPS にリダイレクト
+server {
+    listen 80;
+    server_name example.com;
+
+    return 301 https://$host$request_uri;
+}
+
+```
+
+### 設定反映
+
+```
+sudo nginx -t
+sudo systemctl reload nginx
+
+```
+
+[domain](https://support.muumuu-domain.com/hc/ja/articles/12377384098067-%E3%82%A8%E3%83%83%E3%82%AF%E3%82%B9%E3%82%B5%E3%83%BC%E3%83%90%E3%83%BC%E3%81%A8%E6%8E%A5%E7%B6%9A%E3%81%99%E3%82%8B%E6%96%B9%E6%B3%95%E3%82%92%E6%95%99%E3%81%88%E3%81%A6%E3%81%8F%E3%81%A0%E3%81%95%E3%81%84).
 
 ## 参考
 
