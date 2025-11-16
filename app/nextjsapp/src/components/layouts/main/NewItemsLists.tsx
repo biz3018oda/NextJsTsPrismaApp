@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from 'react';
-// import * as newItemsListsData from '../../../test/newItemsListsData.json';
-import { useTheme } from '@mui/material/styles';
-import { Box, Card, CardContent, CardMedia, Typography, MobileStepper, Button } from '@mui/material';
-import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
-import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
-import ImageListItem from '@mui/material/ImageListItem';
-import ImageListItemBar from '@mui/material/ImageListItemBar';
-import IconButton from '@mui/material/IconButton';
-import InfoIcon from '@mui/icons-material/Info';
+import React, { useEffect, useState } from "react";
+import { useTheme } from "@mui/material/styles";
+import { Box, MobileStepper, Button, IconButton } from "@mui/material";
+import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
+import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
+import ImageListItem from "@mui/material/ImageListItem";
+import ImageListItemBar from "@mui/material/ImageListItemBar";
+import InfoIcon from "@mui/icons-material/Info";
 
-type New = {
+type NewItem = {
   id: number;
   img: string;
   title: string;
@@ -17,37 +15,49 @@ type New = {
 };
 
 export default function NewItemsLists() {
-  // const steps = newItemsListsData['data'];
-
-    const [items, setItems] = useState<New[]>([]);
-
-    useEffect(() => {
-      fetch("/api/newItems")
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("---get new result---:", data);
-          setItems(data);
-        });
-    }, []);
-
-  const rowNum = 3; // 表示する列の数
+  const [items, setItems] = useState<NewItem[]>([]);
+  const rowNum = 3; // 1ページに表示する列数
   const theme = useTheme();
   const [activeStep, setActiveStep] = useState(0);
-  const maxSteps = Math.ceil(items.length / rowNum); // 3列ごとにページが進む
+
+  useEffect(() => {
+    fetch("/api/newItems")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("---get new result---:", data);
+        // 配列かどうかチェックして安全にセット
+        if (Array.isArray(data)) {
+          setItems(data);
+        } else if (Array.isArray(data.items)) {
+          setItems(data.items);
+        } else {
+          setItems([]);
+        }
+      })
+      .catch((err) => {
+        console.error("fetch error:", err);
+        setItems([]);
+      });
+  }, []);
+
+  const maxSteps = Math.ceil(items.length / rowNum);
 
   const handleNext = () => {
-    setActiveStep((prevActiveStep) => Math.min(prevActiveStep + 1, maxSteps - 1));
+    setActiveStep((prev) => Math.min(prev + 1, maxSteps - 1));
   };
 
   const handleBack = () => {
-    setActiveStep((prevActiveStep) => Math.max(prevActiveStep - 1, 0));
+    setActiveStep((prev) => Math.max(prev - 1, 0));
   };
 
-  // 1ページに表示する3つのアイテム
-  const displayPeople = items.slice(activeStep * rowNum, (activeStep + 1) * rowNum);
+  const displayItems = Array.isArray(items)
+    ? items.slice(activeStep * rowNum, (activeStep + 1) * rowNum)
+    : [];
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+    <Box
+      sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <MobileStepper
         aria-label="stepper-btn"
         variant="dots"
@@ -58,8 +68,8 @@ export default function NewItemsLists() {
           maxWidth: 400,
           flexGrow: 1,
           gap: 2,
-          backgroundColor: 'unset',
-          justifyContent: 'center',
+          backgroundColor: "unset",
+          justifyContent: "center",
           mt: 5,
         }}
         nextButton={
@@ -68,22 +78,22 @@ export default function NewItemsLists() {
             onClick={handleNext}
             disabled={activeStep === maxSteps - 1}
             sx={{
-              color: 'secondary.dark',
-              backgroundColor: 'secondary.light',
-              borderRadius: '50%',
-              padding: '0',
-              width: '30px',
-              height: '30px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minWidth: 'unset',
+              color: "secondary.dark",
+              backgroundColor: "secondary.light",
+              borderRadius: "50%",
+              padding: 0,
+              width: 30,
+              height: 30,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: "unset",
             }}
           >
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowLeft sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowLeft sx={{ width: "1em", height: "1em" }} />
             ) : (
-              <KeyboardArrowRight sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
+              <KeyboardArrowRight sx={{ width: "1em", height: "1em" }} />
             )}
           </Button>
         }
@@ -93,22 +103,22 @@ export default function NewItemsLists() {
             onClick={handleBack}
             disabled={activeStep === 0}
             sx={{
-              color: 'secondary.light',
-              backgroundColor: 'secondary.dark',
-              borderRadius: '50%',
-              padding: '0',
-              width: '30px',
-              height: '30px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              minWidth: 'unset',
+              color: "secondary.light",
+              backgroundColor: "secondary.dark",
+              borderRadius: "50%",
+              padding: 0,
+              width: 30,
+              height: 30,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              minWidth: "unset",
             }}
           >
-            {theme.direction === 'rtl' ? (
-              <KeyboardArrowRight sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
+            {theme.direction === "rtl" ? (
+              <KeyboardArrowRight sx={{ width: "1em", height: "1em" }} />
             ) : (
-              <KeyboardArrowLeft sx={{ width: '1em', height: '1em', objectFit: 'contain' }} />
+              <KeyboardArrowLeft sx={{ width: "1em", height: "1em" }} />
             )}
           </Button>
         }
@@ -116,64 +126,49 @@ export default function NewItemsLists() {
 
       <Box
         sx={{
-          display: 'flex',
-          overflow: 'hidden',
-          width: '100%',
+          display: "flex",
+          overflow: "hidden",
+          width: "100%",
           gap: 2,
           px: 2,
+          mt: 2,
         }}
-        aria-label="image-ul"
+        aria-label="image-list"
       >
-      {displayPeople.map((person) => (
-        <Box
-          key={person.id}
-          sx={{
-            width: '33.33%',
-            padding: 1,
-            boxSizing: 'border-box',
-          }}
-          aria-label="image-list-over"
-        >
-          <ImageListItem
+        {displayItems.map((item) => (
+          <Box
+            key={item.id}
             sx={{
-              borderRadius: 2,
-              boxShadow: 3,
-              overflow: 'hidden',
+              width: "33.33%",
+              padding: 1,
+              boxSizing: "border-box",
             }}
-            aria-label="image-list"
           >
-            {/* 画像部分を高さ固定の Box で囲む */}
-            <Box sx={{ width: '100%', height: 300 }}>
-              <img
-                srcSet={`${person.img}?w=600&fit=crop&auto=format&dpr=2 2x`}
-                src={`${person.img}?w=600&fit=crop&auto=format`}
-                alt={person.title}
-                loading="lazy"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  objectFit: 'cover',
-                  display: 'block',
-                }}
+            <ImageListItem
+              sx={{ borderRadius: 2, boxShadow: 3, overflow: "hidden" }}
+            >
+              <Box sx={{ width: "100%", height: 300 }}>
+                <img
+                  src={`${item.img}?w=600&fit=crop&auto=format`}
+                  srcSet={`${item.img}?w=600&fit=crop&auto=format&dpr=2 2x`}
+                  alt={item.title}
+                  loading="lazy"
+                  style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              </Box>
+              <ImageListItemBar
+                title={item.title}
+                subtitle={item.author}
+                actionIcon={
+                  <IconButton sx={{ color: "rgba(255, 255, 255, 0.7)" }}>
+                    <InfoIcon />
+                  </IconButton>
+                }
+                sx={{ background: "rgba(0,0,0,0.6)", height: 56 }}
               />
-            </Box>
-            {/* タイトルと著者を表示 */}
-            <ImageListItemBar
-              title={person.title}
-              subtitle={person.author}
-              actionIcon={
-                <IconButton sx={{ color: 'rgba(255, 255, 255, 0.7)' }}>
-                  <InfoIcon />
-                </IconButton>
-              }
-              sx={{
-                background: 'rgba(0,0,0,0.6)',
-                height: 56,
-              }}
-            />
-          </ImageListItem>
-        </Box>
-      ))}
+            </ImageListItem>
+          </Box>
+        ))}
       </Box>
     </Box>
   );

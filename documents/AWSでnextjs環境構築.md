@@ -30,24 +30,47 @@ project-root/
 ```
 
 ## 開発と本番のビルド
+
 ### 開発
+
+- ビルド
+
 ```
 cd docker
 docker-compose -f docker-compose.dev.yml up --build
 ```
+
 ### 本番
+
 ```
 cd /var/www/nextjsapp/docker
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
+## ローカルの prisma
 
-## DB構築
+- ログイン
 
 ```
+
+docker % docker exec -it nextjs_dev /bin/sh
+/workspace/nextjsapp #
+/workspace/nextjsapp # cd prisma
+/workspace/nextjsapp # npx prisma studio
+```
+
+## DB 構築
+
+```
+
 CREATE DATABASE mydatabase;
 CREATE USER 'root'@'localhost' IDENTIFIED BY 'rootpw';
-GRANT ALL PRIVILEGES ON mydatabase.* TO 'root'@'localhost';
+GRANT ALL PRIVILEGES ON mydatabase.\* TO 'root'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
+
+```
+
+```
+
 ```

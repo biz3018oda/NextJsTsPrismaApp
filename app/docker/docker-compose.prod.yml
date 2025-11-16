@@ -6,25 +6,25 @@ services:
       context: ../nextjsapp
       dockerfile: ../docker/Dockerfile.prod
     container_name: nextjs_prod
-    ports:
-      - "3000:3000"
-    env_file:
-      - ../env/.env.production
     environment:
-      NODE_ENV: "production"
+      - NODE_ENV=production
+      - DATABASE_URL=${DATABASE_URL}
+    ports:
+      - "80:3000" # 本番は80番や443番
     depends_on:
       - db
 
   db:
     image: postgres:15-alpine
     container_name: postgres_prod
-    restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_prod_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
   postgres_prod_data:
