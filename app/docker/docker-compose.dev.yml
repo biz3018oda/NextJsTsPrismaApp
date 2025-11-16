@@ -1,0 +1,33 @@
+version: "3.9"
+
+services:
+  nextjs:
+    build:
+      context: ../nextjsapp
+      dockerfile: ../docker/Dockerfile.dev
+    container_name: nextjs_dev
+    working_dir: /workspace/nextjsapp
+    volumes:
+      - ../nextjsapp:/workspace/nextjsapp
+    ports:
+      - "3000:3000"
+      - "5555:5555"
+    env_file:
+      - ../env/.env.development
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15-alpine
+    container_name: postgres_dev
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    ports:
+      - "5433:5432"
+
+volumes:
+  postgres_dev_data:

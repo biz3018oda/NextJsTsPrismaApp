@@ -34,3 +34,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local env files (ルート以外も含める)
+/app/env/.env*
+!/app/env/.env.sample
+
+
