@@ -1,29 +1,11 @@
-# =============================
-# Build Stage
-# =============================
-FROM node:18.18.2-alpine AS builder
+FROM node:20-alpine
+
 WORKDIR /app
-
 COPY package*.json ./
-RUN npm install
-
+RUN npm ci
 COPY . .
-# Prisma Client を本番向けに生成
 RUN npx prisma generate
 RUN npm run build
 
-# =============================
-# Run Stage
-# =============================
-FROM node:18.18.2-alpine
-WORKDIR /app
-
-COPY --from=builder /app ./
-
-# devDependencies を除外
-RUN npm install --omit=dev
-
 EXPOSE 3000
-
-# → 本番起動前に migrate deploy を実行
-CMD ["sh", "-c", "npx prisma migrate deploy && npm start"]
+CMD ["npm", "start"]
