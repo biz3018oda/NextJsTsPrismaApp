@@ -1,16 +1,16 @@
-version: "3.9"
-
 services:
   nextjs:
     build:
       context: ../nextjsapp
       dockerfile: ../docker/Dockerfile.prod
     container_name: nextjs_prod
-    environment:
-      - NODE_ENV=production
-      - DATABASE_URL=${DATABASE_URL}
+    working_dir: /workspace/nextjsapp
+    volumes:
+      - ../nextjsapp:/workspace/nextjsapp
     ports:
-      - "80:3000"
+      - "3000:3000"
+    env_file:
+      - ../env/.env.production
     depends_on:
       - db
 
